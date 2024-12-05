@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacking IAP – Everydai</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0066FF;
+            --secondary-color: #00D1FF;
+            --background-color: #000000;
+            --text-color: #ffffff;
+            --accent-color: #333333;
+            --gradient-start: #1a1a1a;
+            --gradient-end: #000000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            overflow-x: hidden;
+        }
+
+        .section {
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 0;
+            overflow: hidden;
+            background-image: url('https://images.unsplash.com/photo-1517048676732-d65bc937f952?ixlib=rb-4.0.3&auto=format&fit=crop&w=2940&q=80');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.7));
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-subtitle {
+            font-size: 1.8rem;
+            font-weight: 400;
+            margin-bottom: 2rem;
+            line-height: 1.4;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .cta-button {
+            background: var(--primary-color);
+            color: #fff;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            cursor: pointer;
+            color: var(--text-color);
+            opacity: 0.5;
+            font-size: 1.5rem;
+            z-index: 2;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-30px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-15px) translateX(-50%);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                min-height: 50vh;
+                padding: 3rem 0;
+            }
+            .hero-subtitle {
+                white-space: normal;
+                font-size: 1.4rem;
+            }
+        }
+
+        /* Opportunity Section */
+        .opportunity-section {
+            background: linear-gradient(135deg, #1a1a1a, #000000);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .opportunity-section::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: radial-gradient(circle at 50% -50%, rgba(0, 102, 255, 0.1), transparent 70%);
+            pointer-events: none;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff, #a8a8a8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .timeline-container {
+            max-width: 1000px;
+            margin: 0 auto 6rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            position: relative;
+            margin: 3rem 0;
+            border-radius: 2px;
+        }
+
+        .timeline-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+            animation: progress 3s ease-out forwards;
+        }
+
+        .timeline-points {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .timeline-point {
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        .point-label {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 0.5rem;
+        }
+
+        .point-time {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .bottleneck-graph {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            height: 300px;
+            margin-top: 4rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+        }
+
+        .graph-bar {
+            width: 120px;
+            position: relative;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px 10px 0 0;
+            transition: height 1s ease-out;
+        }
+
+        .graph-bar::before {
+            content: attr(data-label);
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .graph-bar-fill {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+            border-radius: 10px 10px 0 0;
+            transition: height 1s ease-out;
+        }
+
+        /* MIT IAP Section */
+        .iap-section {
+            background: linear-gradient(135deg, #000000, #1a1a1a);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .iap-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .iap-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .iap-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .iap-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .iap-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .iap-card p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+        }
+
+        /* Join Section */
+        .join-section {
+            background: linear-gradient(135deg, #000000, #1a1a1a);
+            text-align: center;
+            position: relative;
+            padding: 4rem 0;
+        }
+
+        .join-form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-group {
+            width: 100%;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .join-form .cta-button {
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .join-form {
+                padding: 0 1rem;
+            }
+        }
+
+        /* Footer */
+        .footer {
+            background: #000000;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .footer-logo {
+            margin-bottom: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-link {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: var(--primary-color);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: #fff;
+        }
+
+        /* Animations */
+        @keyframes progress {
+            to { width: 100%; }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .timeline-points {
+                flex-direction: column;
+                align-items: center;
+                gap: 2rem;
+            }
+
+            .bottleneck-graph {
+                height: 200px;
+            }
+        }
+
+        .two-col-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .two-col-content {
+            padding: 2rem;
+        }
+
+        .two-col-content h3 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 0%, #a8a8a8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .two-col-content p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .two-col-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .two-col-content {
+                text-align: center;
+            }
+        }
+
+        .implications-section {
+            background: linear-gradient(135deg, #1a1a1a, #000000);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .implications-section::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: radial-gradient(circle at 50% -50%, rgba(0, 102, 255, 0.1), transparent 70%);
+            pointer-events: none;
+        }
+
+        .implications-section .content-block {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .implications-section p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .implications-section p:last-child {
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 768px) {
+            .implications-section .content-block {
+                padding: 1.5rem;
+            }
+        }
+
+        .timeturner-container {
+            width: 100%;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .timeturner-container img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 102, 255, 0.2);
+            transition: transform 0.3s ease;
+            filter: saturate(1.2) brightness(1.1);
+        }
+
+        .timeturner-container img:hover {
+            transform: scale(1.02);
+        }
+
+        @media (max-width: 768px) {
+            .timeturner-container {
+                padding: 1rem;
+            }
+            .timeturner-container img {
+                height: 300px;
+            }
+        }
+
+        /* Mission Section */
+        .mission-section {
+            background: linear-gradient(135deg, #1a1a1a, #000000);
+            position: relative;
+            padding: 4rem 0;
+        }
+
+        .mission-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            position: relative;
+            gap: 3rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .mission-step {
+            flex: 1;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .mission-step:hover {
+            transform: translateY(-5px);
+        }
+
+        .mission-step::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -50px;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-color), transparent);
+            transform: translateY(-50%);
+        }
+
+        .mission-step:last-child::after {
+            display: none;
+        }
+
+        .step-number {
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .step-title {
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .step-description {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .mission-steps {
+                flex-direction: column;
+            }
+
+            .mission-step::after {
+                display: none;
+            }
+
+            .mission-step {
+                margin-bottom: 2rem;
+            }
+
+            .mission-step:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                max-width: 1100px;
+            }
+            .implications-section .content-block {
+                max-width: 1000px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+            .two-col-section {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .implications-section .content-block {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Hacking IAP – Everydai</h1>
+            <p class="hero-subtitle">Transform ideas into ventures during MIT's Independent Activities Period</p>
+            <a href="#join" class="cta-button">Join the Movement</a>
+        </div>
+        <div class="scroll-indicator">↓</div>
+    </div>
+
+    <section class="section section-gradient">
+        <div class="container">
+            <div class="two-col-section">
+                <div class="two-col-content fade-in">
+                    <h3>The AI Revolution</h3>
+                    <p>Software development is undergoing a fundamental transformation. AI tools like Codeium Windsurf and Cursor have democratized app development, enabling both developers and non-developers to bring complex ideas to life.</p>
+                    <p>What once took years can now be achieved in weeks. The ability to build at this pace creates an undeniable edge, but it also opens a narrow window of opportunity.</p>
+                </div>
+                <div class="timeturner-container fade-in">
+                    <img src="images/ai-transformation.gif" alt="AI Development Transformation">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="implications-section section">
+        <div class="container">
+            <div class="content-wrapper">
+                <div class="text-content fade-in">
+                    <h3 class="section-title">The Time is Now</h3>
+                    
+                    <div class="content-block">
+                        <p>What once took years can now be achieved in weeks. Imagine delivering a Series B-level product in a single month. The ability to build at this pace creates an undeniable edge, but it also opens a narrow window before this capability becomes widely accessible. The market will inevitably catch up as enterprises build tools in-house and startups flood the ecosystem. For a brief period of time, executing extremely well in a very short period promises to be very lucrative. The majority of the population (read: customers) are not yet aware of these tools but are eager to use their budgets to explore AI solutions.</p>
+                        
+                        <p>With these tools, the paradigm is shifting from spending months validating ideas. AI enables us to understand specifications, pressure-test concepts, and iterate faster than ever. Distribution is becoming the critical bottleneck. The ability to act quickly—to claim market share and gather the data that creates defensible moats—has never been more valuable.</p>
+                        
+                        <p>At MIT, the Independent Activities Period (IAP) presents the perfect opportunity to harness this moment. It's a time for experimentation, innovation, and collaboration—a fertile ground for builders to come together and transform ideas into reality. By forming a community of entrepreneurial-minded students, supported by staff for product and go-to-market motions, we can aim higher: building not just products, but entire companies in a month.</p>
+                        
+                        <p>The power of this community lies in its collective energy. Drawing inspiration from the Sundai Club ethos—ship in a day—we'll foster a fast-paced, iterative environment where ideas are validated, refined, and executed with urgency. The goal is to move quickly but meaningfully, leveraging shared knowledge, AI tools, and a support system of staff mentors to focus not just on building, but on selling, iterating, and scaling.</p>
+                        
+                        <p>This isn't just about hacking for hacking's sake; it's about applying the latest tools and frameworks to create real, impactful ventures. The timing couldn't be better. AI tools are rapidly democratizing development, but the market isn't yet saturated. By utilizing MIT's resources, networks, and culture of innovation, we can not only create products but also set the foundation for startups that outlast the moment and shape the future.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mission-section section">
+        <div class="container">
+            <h2 class="section-title">Build, Launch, Scale</h2>
+            <p class="section-subtitle">Can we build a company in a month? Join us this January to find out.</p>
+
+            <div class="mission-steps">
+                <div class="mission-step">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Build</h3>
+                    <p class="step-description">Create your MVP using AI-powered development tools and rapid iteration</p>
+                </div>
+                <div class="mission-step">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Launch & Sell</h3>
+                    <p class="step-description">Get your first paying customers and validate through real feedback</p>
+                </div>
+                <div class="mission-step">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Scale</h3>
+                    <p class="step-description">Grow your project with guidance from experienced mentors</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="join-section section">
+        <div class="container">
+            <h2 class="section-title">Join the Movement</h2>
+            <p class="section-subtitle">Be part of something extraordinary this January</p>
+
+            <form class="join-form" id="join-form" target="_blank" action="https://docs.google.com/forms/d/e/1FAIpQLSfytBk_bpiAWDSiYkPbf7KS0rJAj2kbETbfSh0xVkJroMpoOw/formResponse" method="POST">
+                <div class="form-group">
+                    <input type="text" name="entry.1779673051" id="name" placeholder="Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" name="entry.1032642532" id="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="entry.1972907710" id="linkedin" placeholder="LinkedIn Profile URL" required>
+                </div>
+                <button type="submit" class="cta-button">Join Now</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-logo">
+                <img src="logo.png" alt="Everydai Logo" height="40">
+            </div>
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            </div>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+                <a href="#" class="footer-link">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
