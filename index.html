@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Hacking IAP – Everydai</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #0066FF;
-            --secondary-color: #00D1FF;
+            --primary-color: #7928CA;
+            --secondary-color: #FF0080;
             --background-color: #000000;
             --text-color: #ffffff;
             --accent-color: #333333;
@@ -24,11 +24,45 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--background-color);
+            font-family: 'Inter', sans-serif;
+            background: #000;
+            position: relative;
             overflow-x: hidden;
+        }
+
+        .stars-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle var(--twinkle-duration) infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.2;
+                transform: scale(0.8);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Make sure all sections stay above the stars */
+        .hero, .section, .join-section, .logo-section {
+            position: relative;
+            z-index: 1;
         }
 
         .section {
@@ -52,12 +86,13 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 4rem 0;
+            padding: 4rem 2rem;
             overflow: hidden;
             background-image: url('https://images.unsplash.com/photo-1517048676732-d65bc937f952?ixlib=rb-4.0.3&auto=format&fit=crop&w=2940&q=80');
             background-size: cover;
             background-position: center;
             color: #fff;
+            width: 100%;
         }
 
         .hero::before {
@@ -74,45 +109,47 @@
         .hero-content {
             position: relative;
             z-index: 2;
+            width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 1rem;
         }
 
         .hero h1 {
-            font-size: 4rem;
+            font-size: clamp(2rem, 5vw, 4rem);
             font-weight: 700;
             margin-bottom: 1.5rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            line-height: 1.2;
         }
 
         .hero-subtitle {
-            font-size: 1.8rem;
-            font-weight: 400;
-            margin-bottom: 2rem;
-            line-height: 1.4;
-            color: rgba(255, 255, 255, 0.9);
+            font-size: clamp(1.1rem, 3vw, 1.5rem);
+            margin-bottom: 3rem;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            line-height: 1.4;
+            padding: 0 1rem;
+        }
+
+        .hero-content .cta-button {
+            margin-top: 1rem;
         }
 
         .cta-button {
-            background: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: #fff;
+            text-decoration: none;
             padding: 1rem 2rem;
             border-radius: 30px;
-            font-size: 1.2rem;
             font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(121, 40, 202, 0.3);
         }
 
         .cta-button:hover {
-            background: transparent;
-            border-color: var(--primary-color);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 6px 20px rgba(121, 40, 202, 0.4);
         }
 
         .scroll-indicator {
@@ -143,11 +180,51 @@
         @media (max-width: 768px) {
             .hero {
                 min-height: 50vh;
-                padding: 3rem 0;
+                padding: 3rem 1rem;
             }
-            .hero-subtitle {
-                white-space: normal;
-                font-size: 1.4rem;
+
+            .hero-content {
+                padding: 0.5rem;
+            }
+
+            .cta-button {
+                width: 80%;
+                max-width: 300px;
+                padding: 0.8rem 1.6rem;
+                font-size: 1rem;
+            }
+
+            .feature-section {
+                padding: 3rem 1rem;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .join-section {
+                padding: 3rem 1rem;
+            }
+
+            .join-form {
+                width: 90%;
+                max-width: 500px;
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 2rem 1rem;
+            }
+
+            .logo-section {
+                padding: 2rem 1rem;
+            }
+
+            .logo-section img {
+                height: 30px;
             }
         }
 
@@ -377,56 +454,37 @@
             width: 100%;
         }
 
+        .logo-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6rem;
+            padding: 6rem 0;
+            background: #000;
+        }
+
+        .logo-section img {
+            height: 80px;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+            filter: brightness(0) invert(1);
+        }
+
+        .logo-section img:hover {
+            opacity: 1;
+        }
+
         @media (max-width: 768px) {
             .join-form {
                 padding: 0 1rem;
             }
-        }
-
-        /* Footer */
-        .footer {
-            background: #000000;
-            padding: 4rem 0;
-            text-align: center;
-        }
-
-        .footer-logo {
-            margin-bottom: 2rem;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .social-link {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1.5rem;
-            transition: color 0.3s ease;
-        }
-
-        .social-link:hover {
-            color: var(--primary-color);
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-link {
-            color: rgba(255, 255, 255, 0.6);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.3s ease;
-        }
-
-        .footer-link:hover {
-            color: #fff;
+            .logo-section {
+                gap: 3rem;
+                padding: 3rem 0;
+            }
+            .logo-section img {
+                height: 50px;
+            }
         }
 
         /* Animations */
@@ -685,14 +743,56 @@
                 padding: 1.5rem;
             }
         }
+        
+        /* Add smooth scrolling behavior */
+        html {
+            scroll-behavior: smooth;
+        }
     </style>
 </head>
 <body>
+    <div class="stars-background"></div>
+
+    <script>
+        function createStars() {
+            const starsContainer = document.querySelector('.stars-background');
+            const numberOfStars = 150;
+
+            for (let i = 0; i < numberOfStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                // Random position
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                
+                // Random size between 1-3px
+                const size = Math.random() * 2 + 1;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                
+                // Random twinkle duration between 2-6s
+                star.style.setProperty('--twinkle-duration', `${Math.random() * 4 + 2}s`);
+                
+                // Random delay
+                star.style.animationDelay = `${Math.random() * 6}s`;
+                
+                // Random opacity
+                star.style.opacity = Math.random() * 0.7 + 0.3;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Call when DOM is loaded
+        document.addEventListener('DOMContentLoaded', createStars);
+    </script>
+
     <div class="hero">
         <div class="hero-content">
             <h1>Hacking IAP – Everydai</h1>
             <p class="hero-subtitle">Transform ideas into ventures during MIT's Independent Activities Period</p>
-            <a href="#join" class="cta-button">Join the Movement</a>
+            <a href="#join-section" class="cta-button">Join the Movement</a>
         </div>
         <div class="scroll-indicator">↓</div>
     </div>
@@ -759,7 +859,7 @@
         </div>
     </section>
 
-    <section class="join-section section">
+    <section class="join-section section" id="join-section">
         <div class="container">
             <h2 class="section-title">Join the Movement</h2>
             <p class="section-subtitle">Be part of something extraordinary this January</p>
@@ -779,22 +879,9 @@
         </div>
     </section>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-logo">
-                <img src="logo.png" alt="Everydai Logo" height="40">
-            </div>
-            <div class="social-links">
-                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-            </div>
-            <div class="footer-links">
-                <a href="#" class="footer-link">Privacy Policy</a>
-                <a href="#" class="footer-link">Terms of Service</a>
-                <a href="#" class="footer-link">Contact Us</a>
-            </div>
-        </div>
-    </footer>
+    <div class="logo-section">
+        <img src="https://www.sundai.club/images/logos/sundai_logo_dark_horizontal.svg" alt="Sundai Logo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/0c/MIT_logo.svg" alt="MIT Logo">
+    </div>
 </body>
 </html>
