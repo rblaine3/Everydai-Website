@@ -523,7 +523,7 @@
                 height: 200px;
             }
         }
-
+        
         .two-col-section {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -744,9 +744,128 @@
             }
         }
         
-        /* Add smooth scrolling behavior */
-        html {
-            scroll-behavior: smooth;
+        .logistics-section {
+            padding: 4rem 2rem;
+            background: rgba(0, 0, 0, 0.7);
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .logistics-section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #ffffff;
+        }
+
+        .logistics-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            gap: 2rem;
+        }
+
+        .logistics-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .logistics-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .logistics-details {
+            width: 100%;
+            margin: 0 auto 3rem;
+        }
+
+        .logistics-details .detail-card {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .logistics-details .detail-item {
+            text-align: center;
+            width: 100%;
+        }
+
+        .logistics-details .detail-item p {
+            margin: 0;
+            font-size: 2rem;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(90deg, #FF4ECD 0%, #FF6B6B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            letter-spacing: -0.05em;
+            line-height: 1.3;
+        }
+
+        .logistics-details .detail-item p em {
+            font-style: italic;
+            background: linear-gradient(90deg, #FF4ECD 50%, #FF6B6B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @media (max-width: 768px) {
+            .logistics-details {
+                max-width: 95%;
+                padding: 0 1rem;
+            }
+
+            .logistics-details .detail-item p {
+                font-size: 1.5rem;
+            }
+        }
+
+        .logistics-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .logistics-info p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #ffffff;
+        }
+
+        .logistics-info p:last-child {
+            margin-bottom: 0;
+        }
+
+        .emphasis-text {
+            border-left: 4px solid var(--primary-color);
+            padding-left: 1rem;
+            font-style: italic;
+        }
+
+        .highlight {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .logistics-section {
+                padding: 3rem 1rem;
+            }
         }
     </style>
 </head>
@@ -816,7 +935,7 @@
         <div class="container">
             <div class="content-wrapper">
                 <div class="text-content fade-in">
-                    <h3 class="section-title">The Time is Now</h3>
+                    <h3 class="section-title">The Time is Now: The 1-Month Startup Experiment</h3>
                     
                     <div class="content-block">
                         <p>What once took years can now be achieved in weeks. Imagine delivering a Series B-level product in a single month. The ability to build at this pace creates an undeniable edge, but it also opens a narrow window before this capability becomes widely accessible. The market will inevitably catch up as enterprises build tools in-house and startups flood the ecosystem. For a brief period of time, executing extremely well in a very short period promises to be very lucrative. The majority of the population (read: customers) are not yet aware of these tools but are eager to use their budgets to explore AI solutions.</p>
@@ -855,6 +974,32 @@
                     <h3 class="step-title">Scale</h3>
                     <p class="step-description">Grow your project with guidance from experienced mentors</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="logistics-section">
+        <h2>What You Need to Know</h2>
+        <div class="logistics-container">
+            <div class="logistics-details">
+                <div class="detail-card">
+                    <div class="detail-item">
+                        <p>Dates: January 6 - January 31</p>
+                    </div>
+                    <div class="detail-item">
+                        <p>Monday - Friday, 10AM - 4PM <em>(suggested)</em></p>
+                    </div>
+                    <div class="detail-item">
+                        <p>Location: TBD</p>
+                    </div>
+                </div>
+            </div>
+            <div class="logistics-info">
+                <p>Everydai is an exclusive opportunity from <span class="highlight">Sundai</span> to be part of a transformative experiment in company building. We're creating a dedicated community of builders who are serious about leveraging AI to create impactful ventures during MIT's IAP.</p>
+                <p>Whether you already have a venture in mind or are eager to explore possibilities, what matters is your commitment to building. This isn't just about coding—it's about creating companies that matter.</p>
+                <p>In partnership with the <span class="highlight">MIT Media Lab</span> and the AI for Impact class, we're bringing together ambitious builders who are ready to shape the future. No equity required—we're invested in your growth and success.</p>
+                <p>Join us in this unique experiment where community meets innovation. Be prepared to build, learn, and create something extraordinary.</p>
+                <p class="emphasis-text">This is not a structured program—it's a collaborative environment where resources, ideas, and knowledge flow freely. Come ready to contribute, share, and grow together. Let's see what we can build together in a month.</p>
             </div>
         </div>
     </section>
